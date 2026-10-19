@@ -1,0 +1,20 @@
+# Local data: keep output directories via placeholders, never commit run files.
+/outputs/**
+!/outputs/**/
+!/outputs/**/.gitkeep
+
+# Local runtime and assistant metadata.
+/.car_scraper_runtime/
+/.agents/
+/.codex/
+
+# Python caches and virtual environments.
+__pycache__/
+*.py[cod]
+/.venv/
+/venv/
+
+# Local credentials.
+.env
+.env.*
+!.env.example
