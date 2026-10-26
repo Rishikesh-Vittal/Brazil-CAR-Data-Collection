@@ -144,6 +144,13 @@ the expected CSV format before use.
 
 ## Quick start
 
+The repository includes a published sample of 500 Acre JSON/PDF pairs. You can
+browse those files without running the scraper. Resume manifests are not
+published: a fresh clone does not automatically treat those existing files as
+completed work, and running a first-500 command there can download them again.
+See [Publishing the repository](#publishing-the-repository) before continuing
+collection from a fresh clone.
+
 Run this from the repository root after installing dependencies and setting your
 API key. It processes **up to the first 500 unique input IDs**, using 20 workers:
 
@@ -620,18 +627,22 @@ python -m car_scraper run-acre --help
 
 ## Publishing the repository
 
-Commit the complete `car_scraper/` source folder, `requirements.txt`, this README
-and a `.gitignore`. The input CSV and project documentation can be included if
-you intend to distribute them. Generated outputs are local run data; keep them
-out of ordinary source commits.
+The repository contains the complete `car_scraper/` source folder,
+`requirements.txt`, this README, `.gitignore`, the Acre input CSV and project
+documentation. It also includes a published sample of the first 500 Acre
+registrations: 500 JSON files in `outputs/acre/json/` and 500 PDFs in
+`outputs/acre/pdf/acre/`.
 
-The included `.gitignore` keeps generated output files local while allowing
-`.gitkeep` placeholders to preserve the directory layout in Git:
+The included `.gitignore` allows those CAR JSON/PDF folders and `.gitkeep`
+placeholders while keeping run manifests, event logs, local runner files and
+generated comparison/estimate reports out of Git:
 
 ```gitignore
 /outputs/**
 !/outputs/**/
 !/outputs/**/.gitkeep
+!/outputs/acre/json/*.json
+!/outputs/acre/pdf/acre/*.pdf
 /.car_scraper_runtime/
 /.agents/
 /.codex/
@@ -644,11 +655,18 @@ venv/
 !.env.example
 ```
 
-A fresh checkout contains empty output directories, not a previous run's
-downloads or progress. Running the scraper populates them locally. The Acre
-input CSV is included, so collection can start after dependency installation and
-API-key setup. Keep provider keys local. The scraper does not need old browser
-profiles or extension experiments to run.
+A fresh checkout contains the published data but **not** the original progress
+manifest. The current pipeline restores completion status from that manifest;
+it does not automatically rebuild status from files that are not listed in it.
+Running a first-500 command in a fresh clone can therefore request those
+500 records again and spend credits. For a true resume, preserve your original
+local output folder and its manifest/journal. When collecting later IDs from a
+fresh clone, use `--start-at` with the intended next unique input ID and choose
+the corresponding batch boundary.
+
+The Acre input CSV is included, so new collection can start after dependency
+installation and API-key setup. Keep provider keys local. The scraper does not
+need old browser profiles or extension experiments to run.
 
 ## Current scope and limitations
 

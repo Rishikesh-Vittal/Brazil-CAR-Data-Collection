@@ -1,7 +1,9 @@
-# Local data: keep output directories via placeholders, never commit run files.
+# Publish CAR JSON/PDF data and folder placeholders; keep other run files local.
 /outputs/**
 !/outputs/**/
 !/outputs/**/.gitkeep
+!/outputs/acre/json/*.json
+!/outputs/acre/pdf/acre/*.pdf
 
 # Local runtime and assistant metadata.
 /.car_scraper_runtime/
